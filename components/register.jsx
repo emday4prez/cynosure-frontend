@@ -31,6 +31,7 @@ const Register = () => {
           method: 'POST',
         }
       );
+
       setToken(responseData);
       setSuccess(true);
       alert('created account');
