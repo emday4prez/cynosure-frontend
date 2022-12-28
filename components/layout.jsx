@@ -1,13 +1,14 @@
-
-import Footer from './footer'
-import Navbar from './navbar'
-
-export default function Layout({ children }) {
+import Footer from './footer';
+import Navbar from './navbar';
+import { UserProvider } from '../utils/authContext';
+export default function Layout({ children, user, loading = false }) {
   return (
     <>
-      <Navbar />
-      <main>{children}</main>
-      <Footer />
+      <UserProvider value={{ user, loading }}>
+        <Navbar />
+        <div>{children}</div>
+        <Footer />
+      </UserProvider>
     </>
-  )
+  );
 }
