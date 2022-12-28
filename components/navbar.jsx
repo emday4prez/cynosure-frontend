@@ -1,6 +1,12 @@
 import Link from 'next/link';
-
+import { useUser } from '../utils/authContext';
+import { unsetToken } from '../utils/auth';
 export default function Navbar() {
+  const { user, loading } = useUser();
+
+  const logout = () => {
+    unsetToken();
+  };
   return (
     <nav>
       <div className="navbar bg-base-100">
@@ -11,12 +17,12 @@ export default function Navbar() {
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
-            <li>
+            {/* <li>
               <a>Item 1</a>
-            </li>
+            </li> */}
             <li tabIndex={0}>
               <a>
-                Account
+                {user && !loading ? user : 'Account'}
                 <svg
                   className="fill-current"
                   xmlns="http://www.w3.org/2000/svg"
@@ -28,12 +34,27 @@ export default function Navbar() {
                 </svg>
               </a>
               <ul className="p-2 bg-base-100">
-                <li>
-                  <Link href="/login">Login</Link>
-                </li>
-                <li>
-                  <Link href="/create-account">Sign Up</Link>
-                </li>
+                {!loading && !user ? (
+                  <>
+                    <li>
+                      <Link href="/login">Login</Link>
+                    </li>
+                    <li>
+                      <Link href="/create-account">Sign Up</Link>
+                    </li>
+                  </>
+                ) : (
+                  ''
+                )}
+                {!loading && user ? (
+                  <li>
+                    <Link href="#" onClick={logout}>
+                      Logout
+                    </Link>
+                  </li>
+                ) : (
+                  ''
+                )}
               </ul>
             </li>
           </ul>
