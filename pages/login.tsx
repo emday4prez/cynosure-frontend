@@ -9,11 +9,11 @@ function Login() {
     identifier: '',
     password: '',
   });
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const responseData = await fetcher(
@@ -39,15 +39,26 @@ function Login() {
     <div className="flex flex-col items-center justify-center bg-blue-600 text-white  min-h-screen ">
       {!loading &&
         (user ? (
-          <li className="list-none">
-            <a
-              className="md:p-2  btn btn-ghost  hover:text-teal-400"
-              onClick={logout}
-              style={{ cursor: 'pointer' }}
-            >
-              Log out
-            </a>
-          </li>
+          <>
+            <li className="list-none">
+              <a
+                className="md:p-2  btn btn-ghost  hover:text-teal-400"
+                onClick={logout}
+                style={{ cursor: 'pointer' }}
+              >
+                Log out
+              </a>
+            </li>
+            <li className="list-none">
+              <Link
+                href="/profile"
+                className="md:p-2  btn btn-ghost  hover:text-teal-400"
+                style={{ cursor: 'pointer' }}
+              >
+                profile
+              </Link>
+            </li>
+          </>
         ) : (
           ''
         ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function AllFasts({ fasts }) {
-  console.log(fasts);
+  console.log('all fasts: ', fasts);
   return (
     <>
       <div>AllFasts</div>

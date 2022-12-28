@@ -47,11 +47,18 @@ export default function Navbar() {
                   ''
                 )}
                 {!loading && user ? (
-                  <li>
-                    <Link href="#" onClick={logout}>
-                      Logout
-                    </Link>
-                  </li>
+                  <>
+                    <li>
+                      <Link href="/profile" onClick={logout}>
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" onClick={logout}>
+                        Logout
+                      </Link>
+                    </li>
+                  </>
                 ) : (
                   ''
                 )}
