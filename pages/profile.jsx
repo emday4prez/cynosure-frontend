@@ -60,7 +60,7 @@ const Profile = ({ avatar }) => {
       {/* eslint-disable @next/next/no-img-element */}
       {avatar && (
         <img
-          className="w-32 h-32"
+          className="w-32 h-32 rounded-2xl"
           src={`https://res.cloudinary.com/dfyd1vtup/image/upload/${avatar}`}
           alt="profile"
         />
