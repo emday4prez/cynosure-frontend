@@ -3,6 +3,7 @@ import { fetcher } from '../utils/api';
 import { getIdFromLocalCookie, getTokenFromServerCookie } from '../utils/auth';
 import { useFetchUser } from '../utils/authContext';
 import { useRouter } from 'next/router';
+import AddFast from '../components/addFast';
 const Profile = ({ avatar }) => {
   const router = useRouter();
   const { user, loading } = useFetchUser();
@@ -65,6 +66,7 @@ const Profile = ({ avatar }) => {
           alt="profile"
         />
       )}
+      <AddFast />
     </div>
   );
 };
