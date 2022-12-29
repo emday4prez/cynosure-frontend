@@ -1,12 +1,29 @@
+import { useState } from 'react';
 import { fetcher } from '../utils/api';
 import { getTokenFromServerCookie } from '../utils/auth';
 import { useFetchUser } from '../utils/authContext';
 
 const Profile = ({ avatar }) => {
   const { user, loading } = useFetchUser();
-  const uploadToClient = (e) => {};
+  const [image, setImage] = useState(null);
+  const uploadToClient = (event: any) => {
+    if (event.target.files && event.target.files[0]) {
+      const tempImg = event.target.files[0];
+      setImage(tempImg);
+    }
+  };
 
-  const uploadToServer = async () => {};
+  const uploadToServer = async () => {
+    const formData = new FormData();
+    const file = image;
+    formData.append('input file', file);
+    formData.append('user_id', '');
+
+    try {
+    } catch (error) {
+      console.error(JSON.stringify(error));
+    }
+  };
 
   return (
     <div className="flex flex-col items-center min-h-screen">
