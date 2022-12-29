@@ -1,8 +1,7 @@
 import cloudinary from 'cloudinary';
 import { IncomingForm } from 'formidable';
-import { resolve } from 'path';
 import { getTokenFromServerCookie } from '../../utils/auth';
-
+import { fetcher } from '../../utils/api';
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -12,7 +11,7 @@ cloudinary.config({
 
 export const config = {
   api: {
-    bodyParse: false,
+    bodyParser: false,
   },
 };
 
@@ -27,6 +26,7 @@ export default async function upload(req, res) {
     });
     const file = data?.files?.inputFile.filepath;
     const { user_id } = data.fields;
+    console.log('file: ', file);
 
     try {
       const response = await cloudinary.v2.uploader.upload(file, {
@@ -34,7 +34,7 @@ export default async function upload(req, res) {
       });
       const { public_id } = response;
       const jwt = getTokenFromServerCookie(req);
-      const updateResponse = await fetch(
+      const updateResponse = await fetcher(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/${user_id}`,
         {
           method: 'PUT',
@@ -48,7 +48,7 @@ export default async function upload(req, res) {
         }
       );
       const data = await updateResponse.json();
-      return res.status(200).json({ message: 'success' });
+      return res.json({ message: 'success' });
     } catch (error) {
       console.error(JSON.stringify(error));
     }

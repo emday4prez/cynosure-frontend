@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { fetcher } from '../utils/api';
 import { getIdFromLocalCookie, getTokenFromServerCookie } from '../utils/auth';
 import { useFetchUser } from '../utils/authContext';
-
+import { useRouter } from 'next/router';
 const Profile = ({ avatar }) => {
+  const router = useRouter();
   const { user, loading } = useFetchUser();
   const [image, setImage] = useState(null);
+
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
       const tempImg = event.target.files[0];
@@ -16,10 +18,18 @@ const Profile = ({ avatar }) => {
   const uploadToServer = async () => {
     const formData = new FormData();
     const file = image;
-    formData.append('input file', file);
+    formData.append('inputFile', file);
     formData.append('user_id', await getIdFromLocalCookie());
 
     try {
+      const responseData = await fetcher(`/api/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+      console.log('profile pic upload responseData: ', responseData);
+      if (responseData.message === 'success') {
+        router.reload('/profile');
+      }
     } catch (error) {
       console.error(JSON.stringify(error));
     }

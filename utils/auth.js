@@ -52,11 +52,10 @@ export const getIdFromLocalCookie = () => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${jwt}`,
       },
-    })
-      .then((data) => {
-        return data.id;
-      })
-      .catch((error) => console.error('error getting id from cookie', error));
+    }).then((data) => {
+      return data.id;
+    });
+    //.catch((error) => console.error('error getting id from cookie', error));
   } else {
     return;
   }
