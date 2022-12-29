@@ -45,7 +45,21 @@ export const getUserFromLocalCookie = () => {
 };
 
 export const getIdFromLocalCookie = () => {
-  return Cookies.get('id');
+  const jwt = getTokenFromLocalCookie();
+  if (jwt) {
+    return fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+    })
+      .then((data) => {
+        return data.id;
+      })
+      .catch((error) => console.error('error getting id from cookie', error));
+  } else {
+    return;
+  }
 };
 
 export const getTokenFromLocalCookie = () => {

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { fetcher } from '../utils/api';
-import { getTokenFromServerCookie } from '../utils/auth';
+import { getIdFromLocalCookie, getTokenFromServerCookie } from '../utils/auth';
 import { useFetchUser } from '../utils/authContext';
 
 const Profile = ({ avatar }) => {
   const { user, loading } = useFetchUser();
   const [image, setImage] = useState(null);
-  const uploadToClient = (event: any) => {
+  const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
       const tempImg = event.target.files[0];
       setImage(tempImg);
@@ -17,7 +17,7 @@ const Profile = ({ avatar }) => {
     const formData = new FormData();
     const file = image;
     formData.append('input file', file);
-    formData.append('user_id', '');
+    formData.append('user_id', await getIdFromLocalCookie());
 
     try {
     } catch (error) {
@@ -46,6 +46,14 @@ const Profile = ({ avatar }) => {
             Set Profile Image
           </button>
         </div>
+      )}
+      {/* eslint-disable @next/next/no-img-element */}
+      {avatar && (
+        <img
+          className="w-32 h-32"
+          src={`https://res.cloudinary.com/dfyd1vtup/image/upload/${avatar}`}
+          alt="profile"
+        />
       )}
     </div>
   );
