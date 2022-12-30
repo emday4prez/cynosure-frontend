@@ -37,11 +37,11 @@ const Profile = ({ avatar }) => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen dark:text-white ">
       <h1 className="text-5xl font-bold">
         {' '}
         welcome back{' '}
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-900">
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-900  dark:from-blue-200 dark:to-indigo-300 ">
           {user}
         </span>
       </h1>
@@ -50,7 +50,7 @@ const Profile = ({ avatar }) => {
           <h4>select an image to upload</h4>
           <input type="file" onChange={uploadToClient} />
           <button
-            className="md:p-2 rounded py-2 text-black bg-blue-400 p-2"
+            className="md:p-2 rounded py-2 text-black bg-blue-400 p-2 dark:text-grey-100 dark:bg-blue-200"
             type="submit"
             onClick={uploadToServer}
           >

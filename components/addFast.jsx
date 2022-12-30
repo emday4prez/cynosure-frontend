@@ -43,32 +43,32 @@ function AddFast() {
               type="date"
               name="startDate"
               onChange={handleChange}
-              className="md:p-2 form-input py-2  rounded mt-2 text-slate-900"
+              className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
               required
             />
             <input
               type="time"
               name="startTime"
               onChange={handleChange}
-              className="md:p-2 form-input py-2  rounded mt-2 text-slate-900"
+              className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
               required
             />
             <input
               type="date"
               name="endDate"
               onChange={handleChange}
-              className="md:p-2  form-input py-2 mt-2  text-slate-900 rounded"
+              className="dark:text-slate-100 md:p-2  form-input py-2 mt-2  text-slate-900 rounded"
               required
             />
             <input
               type="time"
               name="endTime"
               onChange={handleChange}
-              className="md:p-2 form-input py-2  rounded mt-2 text-slate-900"
+              className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
               required
             />
             <button
-              className="rounded text-black bg-purple-200 p-2 hover:bg-purple-100"
+              className="dark:text-slate-100 dark:bg-blue-800 dark:hover:bg-blue-900 rounded text-black bg-blue-200 p-2 hover:bg-blue-300"
               type="submit"
             >
               submit
