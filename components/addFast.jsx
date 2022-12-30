@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import 
 import { useState } from 'react';
 import { fetcher } from '../utils/api';
 import { getTokenFromLocalCookie, setToken } from '../utils/auth';
@@ -18,7 +18,7 @@ function AddFast() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+   
     const jwt = getTokenFromLocalCookie();
 
     try {
@@ -34,7 +34,8 @@ function AddFast() {
             data: {
               start: data.startDateTime,
               end: data.endDateTime,
-              user: user.id,
+              username: user.username,
+              duration: data.duration,
             },
           }),
         }

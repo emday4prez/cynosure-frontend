@@ -1,9 +1,13 @@
 import { format } from 'date-fns';
 
-export const formatDateTime = (serializedDateTime) => {
+export const formatDate = (serializedDateTime) => {
+  const date = serializedDateTime.split('T')[0];
+  const [year, month, day] = date.split('-');
+  return `${month}/${day}/${year}`;
+};
+export const formatTime = (serializedDateTime) => {
   const split = serializedDateTime.split('T');
 
-  const date = format(new Date(split[0]), 'MMMM d, yyyy');
-  const time = split[1].slice(0, 5);
-  return `${date} at ${time}`;
+  const time = split[1];
+  return time;
 };
