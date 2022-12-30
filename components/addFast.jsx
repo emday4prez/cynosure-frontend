@@ -1,11 +1,12 @@
+import Router from 'next/router';
 import { useState } from 'react';
 import { fetcher } from '../utils/api';
 import { getTokenFromLocalCookie, setToken } from '../utils/auth';
 import { useUser } from '../utils/authContext';
-
+import { useRouter } from 'next/router';
 function AddFast() {
   const { user, loading } = useUser();
-  const jwt = getTokenFromLocalCookie();
+  const router = useRouter();
   const [data, setData] = useState({
     startDateTime: '',
     endDateTime: '',
@@ -38,6 +39,7 @@ function AddFast() {
           }),
         }
       );
+      router.reload();
     } catch (e) {
       console.error('error posting fast', e);
     }
