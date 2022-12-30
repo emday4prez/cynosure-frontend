@@ -1,4 +1,4 @@
-import React from 'react';
+import { formatDateTime } from '../utils/date';
 
 function AllFasts({ fasts }) {
   return (
@@ -7,7 +7,9 @@ function AllFasts({ fasts }) {
       <div>
         {fasts &&
           fasts.data.map((fast) => {
-            return <div key={fast.id}>{fast.attributes.start}</div>;
+            return (
+              <div key={fast.id}>{formatDateTime(fast.attributes.start)}</div>
+            );
           })}
       </div>
     </div>
