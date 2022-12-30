@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { fetcher } from '../utils/api';
-import { setToken } from '../utils/auth';
+import { getTokenFromLocalCookie, setToken } from '../utils/auth';
 import { useUser } from '../utils/authContext';
 
 function AddFast() {
+  const { user, loading } = useUser();
+  const jwt = getTokenFromLocalCookie();
   const [data, setData] = useState({
-    startDate: '',
-    endDate: '',
-    startTime: '',
-    endTime: '',
+    startDateTime: '',
+    endDateTime: '',
     duration: '',
   });
   const handleChange = (e) => {
@@ -18,57 +18,57 @@ function AddFast() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const responseData = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          identifier: data.identifier,
-          password: data.password,
-        }),
-      }
-    );
-    setToken(responseData);
+    const jwt = getTokenFromLocalCookie();
+
+    try {
+      const responseData = await fetcher(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/fasts`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify({
+            data: {
+              start: data.startDateTime,
+              end: data.endDateTime,
+              user: user.id,
+            },
+          }),
+        }
+      );
+    } catch (e) {
+      console.error('error posting fast', e);
+    }
   };
-  const { user, loading } = useUser();
+
   return (
     <div>
       {!loading && user ? (
-        <div className="card md:w-96 w-64 bg-base-100 shadow-xl h-96">
-          <form onSubmit={handleSubmit} className="card-body flex flex-col p-8">
+        <div className="card dark:bg-slate-900 m-4 md:w-96 w-64 bg-base-100 shadow-xl ">
+          <form
+            onSubmit={handleSubmit}
+            className="card-body flex flex-col items-center justify-center p-8"
+          >
+            <h1>add a fast</h1>
             <input
-              type="date"
-              name="startDate"
+              type="datetime-local"
+              name="startDateTime"
               onChange={handleChange}
               className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
               required
             />
             <input
-              type="time"
-              name="startTime"
+              type="datetime-local"
+              name="endDateTime"
               onChange={handleChange}
               className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
               required
             />
-            <input
-              type="date"
-              name="endDate"
-              onChange={handleChange}
-              className="dark:text-slate-100 md:p-2  form-input py-2 mt-2  text-slate-900 rounded"
-              required
-            />
-            <input
-              type="time"
-              name="endTime"
-              onChange={handleChange}
-              className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
-              required
-            />
+
             <button
-              className="dark:text-slate-100 dark:bg-blue-800 dark:hover:bg-blue-900 rounded text-black bg-blue-200 p-2 hover:bg-blue-300"
+              className="dark:text-slate-100 dark:bg-blue-800 dark:hover:bg-blue-900 rounded text-black bg-blue-200 py-2 hover:bg-blue-300 w-full"
               type="submit"
             >
               submit

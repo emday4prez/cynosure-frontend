@@ -1,9 +1,8 @@
 import React from 'react';
 
 function AllFasts({ fasts }) {
-  console.log('all fasts: ', fasts);
   return (
-    <>
+    <div>
       <div>AllFasts</div>
       <div>
         {fasts &&
@@ -11,7 +10,7 @@ function AllFasts({ fasts }) {
             return <div key={fast.id}>{fast.attributes.start}</div>;
           })}
       </div>
-    </>
+    </div>
   );
 }
 

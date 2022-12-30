@@ -50,7 +50,7 @@ const Profile = ({ avatar }) => {
           <h4>select an image to upload</h4>
           <input type="file" onChange={uploadToClient} />
           <button
-            className="md:p-2 rounded py-2 text-black bg-blue-400 p-2 dark:text-grey-100 dark:bg-blue-200"
+            className="md:p-2 rounded py-2 text-black bg-blue-400 p-2  dark:bg-blue-200"
             type="submit"
             onClick={uploadToServer}
           >
