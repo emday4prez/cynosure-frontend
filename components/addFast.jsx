@@ -2,22 +2,28 @@ import { useState } from 'react';
 import { fetcher } from '../utils/api';
 import { getTokenFromLocalCookie, setToken } from '../utils/auth';
 import { useUser } from '../utils/authContext';
-
+import { useRouter } from 'next/router';
+import { getDuration } from '../utils/date';
 function AddFast() {
   const { user, loading } = useUser();
-  const jwt = getTokenFromLocalCookie();
+  const router = useRouter();
   const [data, setData] = useState({
     startDateTime: '',
     endDateTime: '',
     duration: '',
   });
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    const durationString = getDuration(data.startDateTime, data.endDateTime);
+    console.log('durationString', durationString);
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+      duration: durationString,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const jwt = getTokenFromLocalCookie();
 
     try {
@@ -33,11 +39,13 @@ function AddFast() {
             data: {
               start: data.startDateTime,
               end: data.endDateTime,
-              user: user.id,
+              username: user,
+              duration: data.duration,
             },
           }),
         }
       );
+      router.reload();
     } catch (e) {
       console.error('error posting fast', e);
     }
