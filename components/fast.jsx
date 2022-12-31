@@ -10,7 +10,7 @@ function Fast({ fast }) {
       <h1 className="text-xl">
         end: {formatDate(end)} at {formatTime(end)}
       </h1>
-      <h1 className="text-xl">duration: </h1>
+      <h1 className="text-xl">duration: {duration} </h1>
       <h1 className="text-xl">username: {username}</h1>
     </div>
   );
