@@ -68,6 +68,7 @@ const Profile = ({ avatar }) => {
         />
       )}
       <AddFast />
+      <AllFasts />
     </div>
   );
 };
