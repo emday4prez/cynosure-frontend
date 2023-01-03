@@ -3,22 +3,18 @@ import { fetcher } from '../utils/api';
 import { getTokenFromLocalCookie, setToken } from '../utils/auth';
 import { useUser } from '../utils/authContext';
 import { useRouter } from 'next/router';
-import { getDuration } from '../utils/date';
+
 function AddFast() {
   const { user, loading } = useUser();
   const router = useRouter();
   const [data, setData] = useState({
-    startDateTime: '',
-    endDateTime: '',
+    endDate: '',
     duration: '',
   });
   const handleChange = (e) => {
-    const durationString = getDuration(data.startDateTime, data.endDateTime);
-    console.log('durationString', durationString);
     setData({
       ...data,
       [e.target.name]: e.target.value,
-      duration: durationString,
     });
   };
 
@@ -37,8 +33,7 @@ function AddFast() {
           },
           body: JSON.stringify({
             data: {
-              start: data.startDateTime,
-              end: data.endDateTime,
+              end: data.endDate,
               username: user,
               duration: data.duration,
             },
@@ -54,26 +49,29 @@ function AddFast() {
   return (
     <div>
       {!loading && user ? (
-        <div className="card dark:bg-slate-900 m-4 md:w-96 w-64 bg-base-100 shadow-xl ">
+        <div className=" bg-sky-100 dark:bg-slate-900 m-4 md:w-96 w-64 bg-base-100 rounded shadow-xl ">
           <form
             onSubmit={handleSubmit}
             className="card-body flex flex-col items-center justify-center p-8"
           >
             <h1>add a fast</h1>
             <input
-              type="datetime-local"
-              name="startDateTime"
+              type="date"
+              name="endDate"
               onChange={handleChange}
               className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
               required
             />
-            <input
-              type="datetime-local"
-              name="endDateTime"
-              onChange={handleChange}
-              className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
-              required
-            />
+            <div className="my-4">
+              <p className="text-center">hours</p>
+              <input
+                type="text"
+                name="duration"
+                onChange={handleChange}
+                className="dark:text-slate-100 md:p-2 form-input py-2  rounded mt-2 text-slate-900"
+                required
+              />
+            </div>
 
             <button
               className="dark:text-slate-100 dark:bg-blue-800 dark:hover:bg-blue-900 rounded text-black bg-blue-200 py-2 hover:bg-blue-300 w-full"
