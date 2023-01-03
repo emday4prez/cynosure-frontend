@@ -12,18 +12,37 @@ export const formatTime = (serializedDateTime) => {
   return time;
 };
 
+// export const getDuration = (start, end) => {
+//   const startDate = formatDate(start);
+//   const endDate = formatDate(end);
+//   const startTime = formatTime(start);
+//   const endTime = formatTime(end);
+
+//   const startDateObject = new Date(startDate + ' ' + startTime);
+//   console.log('startDateObject', startDateObject);
+//   const endDateObject = new Date(endDate + ' ' + endTime);
+//   const timeDifference = startDateObject - endDateObject;
+//   const differenceObject = new Date(timeDifference);
+//   const hours = differenceObject.getHours();
+//   const minutes = differenceObject.getMinutes();
+
+//   return `${hours}h ${minutes}m`;
+// };
 export const getDuration = (start, end) => {
-  const startDate = formatDate(start);
-  const endDate = formatDate(end);
-  const startTime = formatTime(start);
-  const endTime = formatTime(end);
+  const d1 = new Date(start);
+  const d2 = new Date(end);
 
-  const startDateObject = new Date(startDate + ' ' + startTime);
-  const endDateObject = new Date(endDate + ' ' + endTime);
-  const timeDifference = endDateObject - startDateObject;
-  const differenceObject = new Date(timeDifference);
-  const hours = differenceObject.getHours();
-  const minutes = differenceObject.getMinutes();
+  const diff = d2 - d1;
 
-  return `${hours}h ${minutes}m`;
+  const totalMinutes = Math.floor(diff / 1000 / 60);
+
+  function toHoursAndMinutes(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return { hours, minutes };
+  }
+
+  const { hours, minutes } = toHoursAndMinutes(totalMinutes);
+  return `${hours}hours`;
 };

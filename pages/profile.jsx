@@ -4,6 +4,7 @@ import { getIdFromLocalCookie, getTokenFromServerCookie } from '../utils/auth';
 import { useFetchUser } from '../utils/authContext';
 import { useRouter } from 'next/router';
 import AddFast from '../components/addFast';
+import AllFasts from '../components/allFasts';
 const Profile = ({ avatar }) => {
   const router = useRouter();
   const { user, loading } = useFetchUser();
